@@ -43,7 +43,7 @@ export function Footer() {
       <div className="border-t border-white/10 py-6 bg-[#050B14]">
         <div className="container-page flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} PrimeWealth Advisory. All rights reserved.</p>
-          <p>Made with ❤️ in India</p>
+          
         </div>
       </div>
     </footer>
