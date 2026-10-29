@@ -1,0 +1,108 @@
+============================================================
+   FULL WEBSITE DIAGNOSIS REPORT
+   Date      : Thu Oct 29 03:49:17 UTC 2026
+   Site Path : .
+============================================================
+
+## 1. SERVER / OS INFO
+Linux Dipen 6.18.54.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Tue Oct  6 19:13:07 UTC 2026 x86_64 GNU/Linux
+PRETTY_NAME="Ubuntu 26.04.1 LTS"
+VERSION_ID="26.04"
+VERSION="26.04.1 LTS (Resolute Raccoon)"
+VERSION_CODENAME=resolute
+
+## 2. TOP-LEVEL FOLDER STRUCTURE (2 LEVELS)
+.
+./.git
+./.next
+./node_modules
+./primewealth-redesign
+./primewealth-redesign/.next
+./primewealth-redesign/node_modules
+./primewealth-redesign/public
+./primewealth-redesign/src
+./public
+./src
+./src/app
+./src/components
+./src/domain
+./src/features
+./src/shared
+
+## 3. TOTAL FILE & FOLDER COUNT (Excluding node_modules/build)
+Total Folders : 64
+Total Files   : 134
+Total Size    : 1.3G
+
+## 4. FILE TYPES BREAKDOWN (top 20 by count)
+     74 tsx
+     14 sh
+     13 ts
+     10 svg
+      6 json
+      4 mjs
+      4 md
+      2 ico
+      2 html
+      2 gitignore
+      2 css
+      1 txt
+
+## 5. LARGEST 20 FILES (Excluding node_modules)
+252K	./package-lock.json
+244K	./primewealth-redesign/package-lock.json
+212K	./map-data.html.html
+212K	./map-data.html
+208K	./ddd.sh
+176K	./src/shared/data/india-map-paths.ts
+32K	./apple-style-animations.sh
+28K	./fix-all.sh
+24K	./ultra-pro.sh
+20K	./src/shared/data/india-map-data.ts
+16K	./src/shared/config/site.ts
+16K	./src/app/favicon.ico
+16K	./primewealth-redesign/src/app/favicon.ico
+16K	./attach-real-map.sh
+12K	./upgrade.sh
+12K	./src/components/home/Hero.tsx
+12K	./src/components/home/FundingMap.tsx
+12K	./src/components/home/AnimatedIndiaMap.tsx
+12K	./src/app/(marketing)/about/page.tsx
+12K	./real-map.sh
+
+## 6. FRAMEWORK / CMS DETECTION
+✅ Node.js project (package.json found)
+
+## 7. WORLD-WRITABLE FILES (SECURITY RISK ⚠️)
+-rwxrwxrwx 1 dipen dipen 480 Oct 27 11:46 ./.gitignore
+-rwxrwxrwx 1 dipen dipen 679 Oct 27 11:57 ./AGENTS.md
+-rwxrwxrwx 1 dipen dipen 31K Oct 27 21:00 ./apple-style-animations.sh
+-rwxrwxrwx 1 dipen dipen 13K Oct 27 20:23 ./attach-real-map.sh
+-rwxrwxrwx 1 dipen dipen 206K Oct 27 20:13 ./ddd.sh
+-rwxrwxrwx 1 dipen dipen 465 Oct 27 11:46 ./eslint.config.mjs
+-rwxrwxrwx 1 dipen dipen 4.9K Oct 27 15:38 ./final-fix.sh
+-rwxrwxrwx 1 dipen dipen 26K Oct 27 14:59 ./fix-all.sh
+-rwxrwxrwx 1 dipen dipen 8.4K Oct 27 15:53 ./fix-now.sh
+-rwxrwxrwx 1 dipen dipen 8.4K Oct 27 15:52 ./fix-testimonials.sh
+-rwxrwxrwx 1 dipen dipen 7.0K Oct 27 15:56 ./hero-upgrade.sh
+-rwxrwxrwx 1 dipen dipen 212K Oct 27 20:22 ./map-data.html
+-rwxrwxrwx 1 dipen dipen 211K Oct 27 20:21 ./map-data.html.html
+-rwxrwxrwx 1 dipen dipen 9.0K Oct 27 15:58 ./map-hero.sh
+-rwxrwxrwx 1 dipen dipen 4.9K Oct 27 15:35 ./mega-upgrade.sh
+-rwxrwxrwx 1 dipen dipen 296 Oct 27 12:09 ./next-env.d.ts
+-rwxrwxrwx 1 dipen dipen 208 Oct 27 11:58 ./next.config.ts
+-rwxrwxrwx 1 dipen dipen 250K Oct 27 17:59 ./package-lock.json
+-rwxrwxrwx 1 dipen dipen 928 Oct 27 17:59 ./package.json
+-rwxrwxrwx 1 dipen dipen 60 Oct 27 11:58 ./postcss.config.mjs
+-rwxrwxrwx 1 dipen dipen 480 Oct 27 11:46 ./primewealth-redesign/.gitignore
+-rwxrwxrwx 1 dipen dipen 679 Oct 27 12:18 ./primewealth-redesign/AGENTS.md
+-rwxrwxrwx 1 dipen dipen 465 Oct 27 11:46 ./primewealth-redesign/eslint.config.mjs
+-rwxrwxrwx 1 dipen dipen 296 Oct 27 12:53 ./primewealth-redesign/next-env.d.ts
+-rwxrwxrwx 1 dipen dipen 176 Oct 27 12:19 ./primewealth-redesign/next.config.ts
+-rwxrwxrwx 1 dipen dipen 242K Oct 27 12:19 ./primewealth-redesign/package-lock.json
+-rwxrwxrwx 1 dipen dipen 893 Oct 27 12:19 ./primewealth-redesign/package.json
+-rwxrwxrwx 1 dipen dipen 60 Oct 27 12:19 ./primewealth-redesign/postcss.config.mjs
+-rwxrwxrwx 1 dipen dipen 391 Oct 27 11:46 ./primewealth-redesign/public/file.svg
+-rwxrwxrwx 1 dipen dipen 1.1K Oct 27 11:46 ./primewealth-redesign/public/globe.svg
+
+## 8. ERROR / LOG FILES FOUND
