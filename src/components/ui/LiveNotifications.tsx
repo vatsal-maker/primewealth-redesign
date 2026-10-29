@@ -38,8 +38,10 @@ export function LiveNotifications() {
     return () => { clearTimeout(initialTimeout); clearInterval(interval); };
   }, []);
 
+  if (isMenuOpen) return null;
+
   return (
-    <div className="floating-btn fixed bottom-28 md:bottom-6 left-4 md:left-6 z-40">
+    <div className="fixed bottom-28 md:bottom-6 left-4 md:left-6 z-40">
       <AnimatePresence>
         {isVisible && active && (
           <motion.div initial={{ opacity: 0, x: -50, y: 20 }} animate={{ opacity: 1, x: 0, y: 0 }} exit={{ opacity: 0, x: -50, y: 20 }} className="bg-white border border-slate-200 p-3 md:p-4 rounded-2xl shadow-2xl flex items-center gap-3 md:gap-4 w-[280px] md:w-[320px] relative">
@@ -53,6 +55,5 @@ export function LiveNotifications() {
         )}
       </AnimatePresence>
     </div>
-    )}
   );
 }

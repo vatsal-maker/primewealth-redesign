@@ -28,7 +28,9 @@ export function PremiumMultiStepModal() {
     window.addEventListener("mobileMenuOpened", handleMenuOpen);
     window.addEventListener("mobileMenuClosed", handleMenuClose);
     window.addEventListener("open-eligibility-modal", handleOpen);
-    return () => {
+    if (isMenuOpen) return null;
+
+  return () => {
       window.removeEventListener("open-eligibility-modal", handleOpen);
       window.removeEventListener("mobileMenuOpened", handleMenuOpen);
       window.removeEventListener("mobileMenuClosed", handleMenuClose);
@@ -70,7 +72,7 @@ export function PremiumMultiStepModal() {
   return (
     <>
       {/* FIXED: Floating Button Position & Size */}
-      {!isMenuOpen && (
+      
       <motion.button 
         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)} 
