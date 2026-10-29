@@ -1,45 +1,115 @@
 #!/bin/bash
 
-echo "📱 Adding WhatsApp Button to Mobile Header..."
+echo "🚀 Fixing Mobile Menu Overlap..."
 
-# We will inject the WhatsApp button right next to the mobile menu icon in Header.tsx
-cat << 'EOF' > fix_header_mobile.js
+# ==========================================
+# 1. Add body class toggle in Header.tsx
+# ==========================================
+cat << 'EOF' > fix_header_body_class.js
 const fs = require('fs');
 const path = 'src/components/layout/Header.tsx';
 let content = fs.readFileSync(path, 'utf8');
 
-// Target the specific mobile menu button block
-const oldBlock = `        {/* Mobile Menu Trigger */}
-        <button className="lg:hidden p-2 text-brand-navy z-50 relative" onClick={() => setMobileOpen(true)}>
-          <Menu className="h-7 w-7" />
-        </button>`;
+// Add useEffect to toggle body class
+const useEffectHook = `
+  // Hide floating buttons when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.classList.add("mobile-menu-open");
+    } else {
+      document.body.classList.remove("mobile-menu-open");
+    }
+    return () => document.body.classList.remove("mobile-menu-open");
+  }, [mobileOpen]);
+`;
 
-const newBlock = `        {/* Mobile Right Actions (WhatsApp + Menu) */}
-        <div className="flex items-center gap-3 lg:hidden z-50 relative">
-          <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 bg-[#25D366] text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md hover:bg-[#1eb857] transition-colors">
-            <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
-          </a>
-          <button className="p-1 text-brand-navy" onClick={() => setMobileOpen(true)}>
-            <Menu className="h-7 w-7" />
-          </button>
-        </div>`;
-
-if (content.includes(oldBlock)) {
-    content = content.replace(oldBlock, newBlock);
-    fs.writeFileSync(path, content);
-    console.log("✅ WhatsApp button successfully added to mobile header.");
+// Insert it after the existing resize useEffect
+if (!content.includes("mobile-menu-open")) {
+  content = content.replace(
+    /window.addEventListener\("resize", handleResize\);\n    return \(\) => window.removeEventListener\("resize", handleResize\);\n  \}, \[\]\);/,
+    `window.addEventListener("resize", handleResize);\n    return () => window.removeEventListener("resize", handleResize);\n  }, []);\n${useEffectHook}`
+  );
+  fs.writeFileSync(path, content);
+  console.log("✅ Header.tsx updated with body class toggle.");
 } else {
-    console.log("⚠️ Could not find the exact mobile menu block. Please check Header.tsx manually.");
+  console.log("✅ Header.tsx already has the logic.");
 }
 EOF
+node fix_header_body_class.js
+rm fix_header_body_class.js
 
-node fix_header_mobile.js
-rm fix_header_mobile.js
+# ==========================================
+# 2. Add CSS to hide floating buttons
+# ==========================================
+cat << 'EOF' >> src/app/globals.css
+
+/* Hide floating buttons on mobile when menu is open */
+@media (max-width: 1023px) {
+  body.mobile-menu-open .floating-btn {
+    display: none !important;
+  }
+}
+EOF
+echo "✅ globals.css updated with hide logic."
+
+# ==========================================
+# 3. Add 'floating-btn' class to PremiumMultiStepModal
+# ==========================================
+cat << 'EOF' > fix_modal_btn.js
+const fs = require('fs');
+const path = 'src/components/ui/PremiumMultiStepModal.tsx';
+let content = fs.readFileSync(path, 'utf8');
+
+content = content.replace(
+  /className="fixed bottom-24 right-4 md:right-6 z-\[999\]/g,
+  `className="floating-btn fixed bottom-24 right-4 md:right-6 z-[999]`
+);
+fs.writeFileSync(path, content);
+console.log("✅ PremiumMultiStepModal button class updated.");
+EOF
+node fix_modal_btn.js
+rm fix_modal_btn.js
+
+# ==========================================
+# 4. Add 'floating-btn' class to AIChatWidget
+# ==========================================
+cat << 'EOF' > fix_chat_btn.js
+const fs = require('fs');
+const path = 'src/components/ui/AIChatWidget.tsx';
+let content = fs.readFileSync(path, 'utf8');
+
+content = content.replace(
+  /className="fixed bottom-6 right-4 md:right-6 z-\[9999\]/g,
+  `className="floating-btn fixed bottom-6 right-4 md:right-6 z-[9999]`
+);
+fs.writeFileSync(path, content);
+console.log("✅ AIChatWidget button class updated.");
+EOF
+node fix_chat_btn.js
+rm fix_chat_btn.js
+
+# ==========================================
+# 5. Add 'floating-btn' class to LiveNotifications
+# ==========================================
+cat << 'EOF' > fix_notif_btn.js
+const fs = require('fs');
+const path = 'src/components/ui/LiveNotifications.tsx';
+let content = fs.readFileSync(path, 'utf8');
+
+content = content.replace(
+  /className="fixed bottom-28 md:bottom-6 left-4 md:left-6 z-40"/g,
+  `className="floating-btn fixed bottom-28 md:bottom-6 left-4 md:left-6 z-40"`
+);
+fs.writeFileSync(path, content);
+console.log("✅ LiveNotifications class updated.");
+EOF
+node fix_notif_btn.js
+rm fix_notif_btn.js
 
 echo "=========================================="
-echo "🎉 MOBILE HEADER UPDATED!"
-echo "Ab isko live karne ke liye ye commands chalayein:"
+echo "🎉 MOBILE OVERLAP FIXED!"
+echo "Ab isko live karne ke liye GitHub par push karein:"
 echo "git add ."
-echo "git commit -m 'Added WhatsApp to mobile header'"
+echo "git commit -m 'Fixed mobile menu button overlap'"
 echo "git push"
 echo "=========================================="
