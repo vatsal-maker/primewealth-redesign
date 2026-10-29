@@ -35,7 +35,7 @@ export function AIChatWidget() {
   if (isMenuOpen) return null;
 
   return (
-    <div className="fixed bottom-6 right-4 md:right-6 z-[9999] flex flex-col items-end pointer-events-auto">
+    <div className="floating-btn fixed bottom-6 right-4 md:right-6 z-[9999] flex flex-col items-end pointer-events-auto">
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.95 }} className="bg-white border border-slate-200 rounded-2xl shadow-2xl w-[350px] overflow-hidden mb-4 flex flex-col">

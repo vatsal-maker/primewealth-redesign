@@ -42,3 +42,8 @@
   background-clip: text;
 }
 
+
+/* Hide floating buttons when mobile menu is open */
+body.menu-open .floating-btn {
+  display: none !important;
+}

@@ -66,7 +66,7 @@ export function PremiumMultiStepModal() {
       <motion.button 
         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)} 
-        className="fixed bottom-24 right-4 md:right-6 z-[999] bg-gradient-to-r from-brand-gold to-[#B8860B] text-brand-navy px-6 py-3.5 rounded-full font-extrabold shadow-[0_10px_30px_rgba(212,175,55,0.4)] flex items-center gap-2 text-sm md:text-base border border-brand-gold-light"
+        className="floating-btn fixed bottom-24 right-4 md:right-6 z-[999] bg-gradient-to-r from-brand-gold to-[#B8860B] text-brand-navy px-6 py-3.5 rounded-full font-extrabold shadow-[0_10px_30px_rgba(212,175,55,0.4)] flex items-center gap-2 text-sm md:text-base border border-brand-gold-light"
       >
         Check Eligibility <ArrowRight className="h-5 w-5" />
       </motion.button>
