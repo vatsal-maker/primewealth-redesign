@@ -43,7 +43,11 @@
 }
 
 
-/* Hide floating buttons when mobile menu is open */
-body.menu-open .floating-btn {
+
+
+/* Hide floating buttons when mobile menu is active */
+body.mobile-menu-active .floating-btn {
   display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }

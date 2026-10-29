@@ -32,7 +32,7 @@ export function Header() {
   };
 
   return (
-    <header className={cn("sticky top-0 z-50 w-full transition-all duration-300 bg-white border-b border-slate-200", scrolled ? "py-2 shadow-md" : "py-3")}>
+    <header className={cn("sticky top-0 w-full transition-all duration-300 bg-white border-b border-slate-200", scrolled ? "py-2 shadow-md" : "py-3", mobileOpen ? "z-[999999]" : "z-50")}>
       <div className="container-page flex items-center justify-between text-brand-navy">
         
         <Link href="/" className="flex items-center shrink-0 z-50">
