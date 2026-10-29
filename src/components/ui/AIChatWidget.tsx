@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageSquare, X, Send, Bot } from "lucide-react";
 
@@ -7,6 +7,18 @@ type Message = { role: "ai" | "user"; text: string; options?: string[] };
 
 export function AIChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleMenuOpen = () => setIsMenuOpen(true);
+    const handleMenuClose = () => setIsMenuOpen(false);
+    window.addEventListener("mobileMenuOpened", handleMenuOpen);
+    window.addEventListener("mobileMenuClosed", handleMenuClose);
+    return () => {
+      window.removeEventListener("mobileMenuOpened", handleMenuOpen);
+      window.removeEventListener("mobileMenuClosed", handleMenuClose);
+    };
+  }, []);
   const [messages, setMessages] = useState<Message[]>([
     { role: "ai", text: "Hi! I'm PrimeWealth AI. How can I help you today?", options: ["Funding/Loans", "Company Registration", "Certifications"] }
   ]);
@@ -55,5 +67,6 @@ export function AIChatWidget() {
         {isOpen ? <X className="h-7 w-7 text-white" /> : <MessageSquare className="h-7 w-7 text-brand-gold" />}
       </motion.button>
     </div>
+    )}
   );
 }

@@ -18,12 +18,21 @@ export function PremiumMultiStepModal() {
   const [step, setStep] = useState<Step>(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formData, setFormData] = useState({ type: "", stage: "", detail: "", name: "", phone: "" });
 
   useEffect(() => {
     const handleOpen = () => setIsOpen(true);
+    const handleMenuOpen = () => setIsMenuOpen(true);
+    const handleMenuClose = () => setIsMenuOpen(false);
+    window.addEventListener("mobileMenuOpened", handleMenuOpen);
+    window.addEventListener("mobileMenuClosed", handleMenuClose);
     window.addEventListener("open-eligibility-modal", handleOpen);
-    return () => window.removeEventListener("open-eligibility-modal", handleOpen);
+    return () => {
+      window.removeEventListener("open-eligibility-modal", handleOpen);
+      window.removeEventListener("mobileMenuOpened", handleMenuOpen);
+      window.removeEventListener("mobileMenuClosed", handleMenuClose);
+    };
   }, []);
 
   useEffect(() => {
@@ -61,6 +70,7 @@ export function PremiumMultiStepModal() {
   return (
     <>
       {/* FIXED: Floating Button Position & Size */}
+      {!isMenuOpen && (
       <motion.button 
         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)} 
@@ -68,6 +78,7 @@ export function PremiumMultiStepModal() {
       >
         Check Eligibility <ArrowRight className="h-4 w-4" />
       </motion.button>
+      )}
 
       <AnimatePresence>
         {isOpen && (

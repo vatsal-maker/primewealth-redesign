@@ -12,6 +12,18 @@ const notifications = [
 export function LiveNotifications() {
   const [active, setActive] = useState<any>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleMenuOpen = () => setIsMenuOpen(true);
+    const handleMenuClose = () => setIsMenuOpen(false);
+    window.addEventListener("mobileMenuOpened", handleMenuOpen);
+    window.addEventListener("mobileMenuClosed", handleMenuClose);
+    return () => {
+      window.removeEventListener("mobileMenuOpened", handleMenuOpen);
+      window.removeEventListener("mobileMenuClosed", handleMenuClose);
+    };
+  }, []);
 
   useEffect(() => {
     let index = 0;
@@ -41,5 +53,6 @@ export function LiveNotifications() {
         )}
       </AnimatePresence>
     </div>
+    )}
   );
 }
