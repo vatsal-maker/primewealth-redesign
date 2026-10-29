@@ -25,21 +25,16 @@ export function PremiumMultiStepModal() {
     const handleOpen = () => setIsOpen(true);
     const handleMenuOpen = () => setIsMenuOpen(true);
     const handleMenuClose = () => setIsMenuOpen(false);
+    
+    window.addEventListener("open-eligibility-modal", handleOpen);
     window.addEventListener("mobileMenuOpened", handleMenuOpen);
     window.addEventListener("mobileMenuClosed", handleMenuClose);
-    window.addEventListener("open-eligibility-modal", handleOpen);
-    if (isMenuOpen) return null;
-
-  return () => {
+    
+    return () => {
       window.removeEventListener("open-eligibility-modal", handleOpen);
       window.removeEventListener("mobileMenuOpened", handleMenuOpen);
       window.removeEventListener("mobileMenuClosed", handleMenuClose);
     };
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsOpen(true), 5000);
-    return () => clearTimeout(timer);
   }, []);
 
   const handleNext = () => setStep((s) => Math.min(s + 1, 4) as Step);
@@ -49,14 +44,8 @@ export function PremiumMultiStepModal() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData),
-      });
-      if (response.ok) setIsSubmitted(true);
-      else alert("Something went wrong.");
-    } catch (error) { alert("Network error."); } 
-    finally { setIsLoading(false); }
+    // Dummy delay for now, you can connect API later
+    setTimeout(() => { setIsSubmitted(true); setIsLoading(false); }, 1500);
   };
 
   const progress = (step / 4) * 100;
@@ -69,18 +58,18 @@ export function PremiumMultiStepModal() {
     { icon: CheckCircle2, text: "Get Started" }
   ];
 
+  // If mobile menu is open, hide the floating button completely
+  if (isMenuOpen) return null;
+
   return (
     <>
-      {/* FIXED: Floating Button Position & Size */}
-      
       <motion.button 
         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)} 
-        className="fixed bottom-6 right-6 z-[999] bg-gradient-to-r from-brand-gold to-[#B8860B] text-brand-navy px-5 py-3 rounded-full font-extrabold shadow-[0_10px_30px_rgba(212,175,55,0.4)] flex items-center gap-2 text-sm border border-brand-gold-light"
+        className="fixed bottom-24 right-4 md:right-6 z-[999] bg-gradient-to-r from-brand-gold to-[#B8860B] text-brand-navy px-6 py-3.5 rounded-full font-extrabold shadow-[0_10px_30px_rgba(212,175,55,0.4)] flex items-center gap-2 text-sm md:text-base border border-brand-gold-light"
       >
-        Check Eligibility <ArrowRight className="h-4 w-4" />
+        Check Eligibility <ArrowRight className="h-5 w-5" />
       </motion.button>
-      )}
 
       <AnimatePresence>
         {isOpen && (
@@ -100,10 +89,8 @@ export function PremiumMultiStepModal() {
 
                 <div className="relative z-10">
                   <div className="flex items-center gap-4 mb-10">
-                     {/* FIXED: Logo Size Increased */}
                      <div className="h-14 w-14 bg-white rounded-xl flex items-center justify-center p-2 shadow-lg"><img src="/logo.png" alt="Logo" className="w-full h-full object-contain" /></div>
                      <div>
-                        {/* FIXED: Text Changed to PrimeWealth Advisory */}
                         <h2 className="text-2xl font-extrabold text-white tracking-wide">PrimeWealth Advisory</h2>
                         <p className="text-xs font-bold text-brand-gold uppercase tracking-widest mt-1">Your Growth Partner</p>
                      </div>
