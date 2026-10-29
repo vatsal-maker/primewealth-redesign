@@ -30,9 +30,13 @@ export function Footer() {
         <div>
           <h4 className="text-white font-bold mb-6">Company</h4>
           <ul className="space-y-3 text-sm">
-            {["About", "Funding", "Blog", "Contact", "Privacy Policy", "Terms of Service"].map((item) => (
-              <li key={item}><Link href={`/${item.toLowerCase().replace(" ", "-")}`} className="text-slate-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight className="h-3 w-3" /> {item}</Link></li>
-            ))}
+            {/* FIXED LINKS HERE */}
+            <li><Link href="/about" className="text-slate-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight className="h-3 w-3" /> About</Link></li>
+            <li><Link href="/funding" className="text-slate-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Funding</Link></li>
+            <li><Link href="/blog" className="text-slate-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Blog</Link></li>
+            <li><Link href="/contact" className="text-slate-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Contact</Link></li>
+            <li><Link href="/privacy" className="text-slate-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Privacy Policy</Link></li>
+            <li><Link href="/terms" className="text-slate-400 hover:text-brand-gold transition-colors flex items-center gap-2"><ArrowRight className="h-3 w-3" /> Terms of Service</Link></li>
           </ul>
         </div>
       </div>

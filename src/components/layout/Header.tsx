@@ -20,12 +20,11 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on resize
   useEffect(() => {
-    const handleResize = () => { if (window.innerWidth >= 1024) setMobileOpen(false); };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    if (mobileOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'unset';
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [mobileOpen]);
 
   const openPopup = () => {
     setMobileOpen(false);
@@ -36,26 +35,24 @@ export function Header() {
     <header className={cn("sticky top-0 z-50 w-full transition-all duration-300 bg-white border-b border-slate-200", scrolled ? "py-2 shadow-md" : "py-3")}>
       <div className="container-page flex items-center justify-between text-brand-navy">
         
-        {/* Logo */}
         <Link href="/" className="flex items-center shrink-0 z-50">
           <div className="relative h-10 w-36 md:h-12 md:w-44 flex items-center justify-start overflow-hidden">
              <img src="/logo.png" alt="PrimeWealth Advisory Logo" className="w-full h-full object-contain object-left" />
           </div>
         </Link>
         
-        {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-2 text-sm font-bold text-brand-navy/80">
           <Link href="/" className="px-3 py-2 hover:text-brand-gold transition-colors">Home</Link>
-          <Link href="/about" className="px-3 py-2 hover:text-brand-gold transition-colors">About Us</Link>
+          <Link href="/about" className="px-3 py-2 hover:text-brand-gold transition-colors">About Us</Link> {/* FIXED: /about */}
           <div className="relative" onMouseEnter={() => setOpenMega(true)} onMouseLeave={() => setOpenMega(false)}>
             <button className="flex items-center gap-1 px-3 py-2 hover:text-brand-gold transition-colors">Services <ChevronDown className={cn("h-4 w-4 transition-transform", openMega && "rotate-180")} /></button>
             <AnimatePresence>{openMega && <MegaMenu />}</AnimatePresence>
           </div>
           <Link href="/funding" className="px-3 py-2 hover:text-brand-gold transition-colors">Funding</Link>
+          <Link href="/blog" className="px-3 py-2 hover:text-brand-gold transition-colors">Blog</Link> {/* Added Blog */}
           <Link href="/contact" className="px-3 py-2 hover:text-brand-gold transition-colors">Contact</Link>
         </nav>
 
-        {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center gap-3">
           <Button asChild className="bg-white border border-slate-200 text-brand-navy hover:bg-slate-50 rounded-full h-10 px-5 text-sm font-bold shadow-sm">
             <a href={site.whatsapp} target="_blank"><MessageCircle className="mr-2 h-4 w-4 text-[#25D366]"/> WhatsApp</a>
@@ -65,13 +62,12 @@ export function Header() {
           </Button>
         </div>
 
-        {/* Mobile Menu Trigger */}
-        <button className="lg:hidden p-2 text-brand-navy z-50 relative" onClick={() => setMobileOpen(true)}>
+        <button className="lg:hidden p-2 text-brand-navy z-[100] relative" onClick={() => setMobileOpen(true)}>
           <Menu className="h-7 w-7" />
         </button>
       </div>
       
-      {/* PREMIUM MOBILE MENU */}
+      {/* PREMIUM MOBILE MENU (Z-INDEX FIXED) */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div 
@@ -79,14 +75,12 @@ export function Header() {
             animate={{ opacity: 1, x: 0 }} 
             exit={{ opacity: 0, x: "100%" }} 
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[99999] bg-[#0A192F] flex flex-col overflow-hidden"
+            className="fixed inset-0 z-[999999] bg-[#0A192F] flex flex-col overflow-hidden" // Z-INDEX SUPER HIGH
           >
-            {/* Background Elements */}
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none" />
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/10 blur-[80px] rounded-full pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/20 blur-[80px] rounded-full pointer-events-none" />
 
-            {/* Top Bar: Logo & Close */}
             <div className="flex items-center justify-between p-6 border-b border-white/10 relative z-10">
               <div className="h-10 w-36 bg-white rounded-lg p-1 flex items-center justify-center">
                  <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
@@ -96,34 +90,27 @@ export function Header() {
               </button>
             </div>
 
-            {/* Navigation Links */}
             <div className="flex-1 overflow-y-auto py-8 px-6 relative z-10 flex flex-col gap-2">
-              {["Home", "About Us", "Funding", "Contact"].map((link, i) => (
-                <motion.div 
-                  key={link}
-                  initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + i * 0.05 }}
-                >
-                  <Link 
-                    href={link === "Home" ? "/" : `/${link.toLowerCase().replace(" ", "-")}`} 
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center justify-between py-4 text-2xl font-extrabold text-white hover:text-brand-gold transition-colors border-b border-white/5 group"
-                  >
-                    {link}
+              {[
+                { name: "Home", path: "/" },
+                { name: "About Us", path: "/about" },
+                { name: "Funding", path: "/funding" },
+                { name: "Blog", path: "/blog" },
+                { name: "Contact", path: "/contact" }
+              ].map((link, i) => (
+                <motion.div key={link.name} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + i * 0.05 }}>
+                  <Link href={link.path} onClick={() => setMobileOpen(false)} className="flex items-center justify-between py-4 text-2xl font-extrabold text-white hover:text-brand-gold transition-colors border-b border-white/5 group">
+                    {link.name}
                     <ArrowRight className="h-5 w-5 text-brand-gold opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </Link>
                 </motion.div>
               ))}
 
-              {/* Services Accordion */}
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="border-b border-white/5">
-                <button 
-                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                  className="w-full flex items-center justify-between py-4 text-2xl font-extrabold text-white hover:text-brand-gold transition-colors"
-                >
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="border-b border-white/5">
+                <button onClick={() => setMobileServicesOpen(!mobileServicesOpen)} className="w-full flex items-center justify-between py-4 text-2xl font-extrabold text-white hover:text-brand-gold transition-colors">
                   Services
                   <ChevronDown className={cn("h-5 w-5 text-brand-gold transition-transform duration-300", mobileServicesOpen && "rotate-180")} />
                 </button>
-                
                 <AnimatePresence>
                   {mobileServicesOpen && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
@@ -143,7 +130,6 @@ export function Header() {
               </motion.div>
             </div>
 
-            {/* Bottom CTA Area */}
             <div className="p-6 border-t border-white/10 relative z-10 bg-[#0A192F]/90 backdrop-blur-md">
               <div className="flex gap-3 mb-4">
                  <Button asChild className="flex-1 bg-green-500 hover:bg-green-600 text-white rounded-xl h-12 font-bold shadow-lg">
